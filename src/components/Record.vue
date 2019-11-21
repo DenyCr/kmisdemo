@@ -20,13 +20,14 @@
           option(disabled value="") Выберите один из вариантов
           option Муж
           option Жен
-        input(type="radio" id="one" value="Men" )
-        label(for="one") Муж
-        input(type="radio" id="two" value="Gl" )
-        label(for="two") Жен
+        //- input(type="radio" id="one" value="Men" )
+        //- label(for="one") Муж
+        //- input(type="radio" id="two" value="Gl" )
+        //- label(for="two") Жен
     div(class="HB")
         p Дата рождения
         input(type="date")
+  div(class="persData" v-if="post")    
     div(class="CNILS")
         p СНИЛС
         input
@@ -110,6 +111,11 @@ h1
   flex-direction: column 
 
 .persData
+  display: flex
+  justify-content: center
   // display: grid
   //grid-template-columns: 20% auto
+
+.persData > div
+  display: flex
 </style>

@@ -1,13 +1,16 @@
 <template>
   <div id="app">
     <header>
-      <!-- <img src="./assets/logo.png"> -->
+
       <h1>{{ msg }}</h1>
     </header>
     <div class="main">
       <ListOfArmor />
       <Record />
     </div>
+    <footer>
+      <img src="./assets/logo.png">
+    </footer>
   </div>
 </template>
 
