@@ -70,7 +70,7 @@ export default {
     },
     getId()
     {
-      return (this.$route.params.id)?this.$route.params.id:999
+      return (this.$route.params.id)?this.$route.params.id:'0'
     }
   },
     
@@ -84,11 +84,11 @@ export default {
     this.getPost(this.$route.params.id);
     this.getId();
   },
-  // watch: {
-  // '$route'() {
-  //   this.getPost(this.id);
-  // }
-// }
+  watch: {
+  '$route'() {
+    this.getPost(this.id);
+  }
+}
 }
 </script>
 <style lang="sass" scoped>
