@@ -17,9 +17,9 @@
 import axios from 'axios'
 
 export default {
+  props: ['id'],
   data () {
-    return {      
-      props: ['id'],
+    return { 
       posts: null,
       endpoint: 'https://jsonplaceholder.typicode.com/posts/',
       userPost: []
@@ -35,7 +35,7 @@ export default {
       axios.get(this.endpoint)
         .then(Response => {
           this.posts = Response.data;
-          this.userPost =  this.posts.filter(post=> post.userId == 1)
+          this.userPost =  this.posts.filter(post=> post.userId == 2)
           // console.log('this.userPost: ', this.userPost);
         })
         .catch(Error => {
