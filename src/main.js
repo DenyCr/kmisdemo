@@ -21,7 +21,7 @@ const router = new Router({
     {
       path: '/post/:id',
       name:'post',
-      component:  require('./components/ListOfArmor.vue'),//ListOfArmor
+      component:  require('./components/ListOfArmor.vue'),
       props: true,
     },
   ]

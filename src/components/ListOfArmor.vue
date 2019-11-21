@@ -3,12 +3,12 @@
 
   aside(class="sidebar")
     router-link(
-      v-for="post in userPost"
+      v-for="post in posts"
       active-class="in-active"
       class="link"
       :to="{ name: 'post', params: { id: post.id } }"
       ) 
-      div(class="armor") {{post.id}} {{ post.title }} 
+      div(class="armor") {{post.id}}. {{ post.title }} 
   //- h1 ListOfArmor &nbsp;
   div(class="content")
     router-viev
@@ -21,8 +21,8 @@ export default {
   data () {
     return { 
       posts: null,
-      endpoint: 'https://jsonplaceholder.typicode.com/posts/',
-      userPost: []
+      endpoint: '.\\src\\db\\generated.json',
+      // userPost: []
     }
   },
 
@@ -35,8 +35,7 @@ export default {
       axios.get(this.endpoint)
         .then(Response => {
           this.posts = Response.data;
-          this.userPost =  this.posts.filter(post=> post.userId == 2)
-          // console.log('this.userPost: ', this.userPost);
+          // this.userPost =  this.posts.filter(post=> post.userId == 2)
         })
         .catch(Error => {
           console.log('---------error----------');
