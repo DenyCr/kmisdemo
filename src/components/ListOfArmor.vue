@@ -2,19 +2,22 @@
 .test
   
   aside(class="sidebar")
-    spam {{selected}}
-    br
+    //- span {{selected}}
+    //- br
+    p МО
     select(v-model="selectedCompany")
-      options(v-for="sel in selected" v-bind:value="sel.index") {{ sel }}
+      option(v-for="sel in selected"  v-bind:value="sel.id" v-bind:company="sel.company") {{ sel.company }} 
+    br     
+    span {{selectedCompany}}
     button Записаться
     h1 Список номерков &nbsp;
     router-link(
-      v-for="post in posts"
+      v-for="post in getDoctors"
       active-class="in-active"
       class="link"
       :to="{ name: 'post', params: { id: post.id } }"
       ) 
-      div(class="armor") {{post.id}}. {{ post.title }} 
+      div(class="armor") {post.userId}}. { post.name }} 
   
   div(class="content")
     router-viev
@@ -33,6 +36,13 @@ export default {
       // userPost: []
     }
   },
+  computed: {
+      getDoctors: function () {
+        if (this.selectedCompany != null){
+          return  this.posts.filter(post=> post.index == this.selectedCompany)
+        }
+      }
+  },
 
   created() {
     this.getAllPOsts();
@@ -43,19 +53,20 @@ export default {
       axios.get(this.endpoint)
         .then(Response => {
           this.posts = Response.data;
-          console.log('this.posts: ', this.posts);
-          // this.selected = this.posts.map(post=> 
-          //   {          return {id: post.index, name: post.company}} ); 
-          this.selected = this.posts.map(post=>{ return {id: post.index, name: post.company}} );
-          console.log('this.selected: ', this.selected);
+          // console.log('this.posts: ', this.posts);
+          this.selected = this.posts.map(post=> 
+            {          return {id: post.index, company: post.company}} ); 
+          // console.log('this.selected: ', this.selected);
           
-          // this.userPost =  this.posts.filter(post=> post.userId == 2)
+          // this.userPost =  this.posts.filter(post=> post.userId == selectedCompany)
         })
         .catch(Error => {
           console.log('---------error----------');
           console.log(Error);
         })
-    }
+    },
+
+
   }
 
 }
