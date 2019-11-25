@@ -2,6 +2,10 @@
 .test
   
   aside(class="sidebar")
+    spam {{selected}}
+    br
+    select(v-model="selectedCompany")
+      options(v-for="sel in selected" v-bind:value="sel.index") {{ sel }}
     button Записаться
     h1 Список номерков &nbsp;
     router-link(
@@ -24,6 +28,8 @@ export default {
     return { 
       posts: null,
       endpoint: '.\\src\\db\\generated.json',
+      selected: [],
+      selectedCompany: null,
       // userPost: []
     }
   },
@@ -37,6 +43,12 @@ export default {
       axios.get(this.endpoint)
         .then(Response => {
           this.posts = Response.data;
+          console.log('this.posts: ', this.posts);
+          // this.selected = this.posts.map(post=> 
+          //   {          return {id: post.index, name: post.company}} ); 
+          this.selected = this.posts.map(post=>{ return {id: post.index, name: post.company}} );
+          console.log('this.selected: ', this.selected);
+          
           // this.userPost =  this.posts.filter(post=> post.userId == 2)
         })
         .catch(Error => {
