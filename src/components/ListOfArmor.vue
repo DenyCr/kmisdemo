@@ -9,7 +9,7 @@
       select(v-model="selectedCompany")
         option(v-for="sel in selected"  v-bind:value="sel.id" v-bind:company="sel.company") {{ sel.company }} 
     br     
-    //- span {selectedCompany}}
+    span {{selectedCompany}}
     //- button Записаться
     h1 Список номерков 
     //- &nbsp;
@@ -19,16 +19,17 @@
         v-for="post in getDoctors"
         active-class="in-active"
         class="link"
-        :to="{ name: 'post', params: { id: post.id } }"
+        :to="{ name: 'post', params: { id: post.id, comp: selectedCompany} }"
         ) 
+        .armor(v-on:click="getDoctorsArmLst()") {{post.speciality}} - {{ post.name }}  
         //- span {{armorlistactiv}} 
-        div(:class="{}" v-on:click="getDoctorsArmLst(post)") 
-          span {{post.id}}
-          p ФИО - {{ post.name }} <br> специализация - {{post.speciality}}
-          .armLst(v-if="getArmors" v-for="item in getArmors")
-            br
-            span {{item.registered}}
-            br
+        //- div(:class="{}" v-on:click="getDoctorsArmLst(post)") 
+        //-   span {{post.id}}
+        //-   p ФИО - {{ post.name }} <br> специализация - {{post.speciality}}
+          //- .armLst(v-if="getArmors" v-for="item in getArmors")
+          //-   br
+          //-   span {{item.registered}}
+          //-   br
 
         //- span {{armorlistactiv}}
         br
@@ -47,8 +48,8 @@ export default {
       endpoint: '.\\src\\db\\generated.json',
       selected: [],
       selectedCompany: null,
-      armorlistactiv: false,
-      ckickDoct: null
+      // armorlistactiv: false,
+      // ckickDoct: null
       // userPost: []
     }
   },
@@ -59,12 +60,12 @@ export default {
         return  this.posts.filter(post=> post.index == this.selectedCompany)[0].doctors
       }
     },
-    getArmors: function() {
-      if(this.ckickDoct != null){
-        return this.ckickDoct.visits
-        // this.posts.filter(post=> post.index == this.selectedCompany)[this.&&]);
-      }
-    }
+    // getArmors: function() {
+    //   if(this.ckickDoct != null){
+    //     return this.ckickDoct.visits
+    //     // this.posts.filter(post=> post.index == this.selectedCompany)[this.&&]);
+    //   }
+    // }
 
   },
 
@@ -91,8 +92,8 @@ export default {
     },
     getDoctorsArmLst: function (post) {      
       // console.log('armorlistactiv: ', armorlistactiv );
-      console.log(post)
-      this.ckickDoct=post
+      // console.log(post)
+      // this.ckickDoct=post
       if(this.armorlistactiv)
         this.armorlistactiv=false
       else this.armorlistactiv=true

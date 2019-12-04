@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import App from './App.vue'
-import Record from './components/Record.vue'
+// import Record from './components/Record.vue'
 // import ListOfArmor from './components/ListOfArmor.vue'
 Vue.use(Router)
 
@@ -19,7 +19,7 @@ const router = new Router({
       component: App,
     },
     {
-      path: '/post/:id',
+      path: '/company=:comp&&doc=:id',
       name:'post',
       component:  require('./components/ListOfArmor.vue'),
       props: true,
