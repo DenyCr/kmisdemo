@@ -53,8 +53,12 @@ a {
 }
 
 .main {
+  background: rgb(255, 255, 243);
   display: grid;
   grid-template-columns: 22% auto
+}
+header, footer{
+  // background:#ABE0FD;
 }
 
 </style>

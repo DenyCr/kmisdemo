@@ -41,20 +41,20 @@
           span Выбранный специалист
           input(:placeholder="[[doctor]]" type="doctor" v-model='doctor')
         .spec
-          span Терапевт 
+          span Специальность 
           input(:placeholder="[[speciality]]" type="speciality" v-model='speciality')
         .date
           span Дата приема
           input(type="date" value="[[getArmors[perem].registered]]" v-model='getArmors[perem].registered')
 
     .console
-      button( id="reg" ) Записаться
-      button( id="edit" onclick="alert(this.innerHTML)") Изменить
-      button( id="cansel" ) Отменить бронь
+      button(v-if="perem != null" id="reg" @click="reg()") Записаться
+      button(v-if="perem != null" id="edit" onclick="alert(this.innerHTML)") Изменить
+      button(v-if="perem != null" id="cansel" @click="cansel()" ) Отменить бронь
     br 
       
-
-
+    .win(v-if="(perem != null) && (regID)")
+      h1 Вы, {{this.getArmors[this.perem].name}} записались на прием к {{this.speciality}} на {{this.getArmors[this.perem].registered}} число
 
       
 
@@ -71,6 +71,7 @@ export default {
       doctor: null,
       speciality: null,
       perem: null,
+      regID: null
     }
   },
 
@@ -87,6 +88,18 @@ export default {
     getArmLst(id) {
       Console.log("ID = ", id)
       return id
+    },
+    reg(){
+      if(!this.regID)
+        this.regID=true
+
+      return this.regID
+    },
+    cansel(){
+      if(this.regID)
+        this.regID=false
+
+      return this.regID
     }
   },
     
@@ -98,11 +111,12 @@ export default {
 
     getArmors: function() {
       if(this.$route.params != null){
-        // this.company =this.post.filter(post=> post.index == this.$route.params.comp)[0].company
-        // this.doctor = this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[0].name
-        // this.speciality = this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[0].speciality
+        let qqq = this.post.filter(post=> post.index == this.$route.params.comp)[0]        
+        this.company =qqq.company
+        this.doctor = qqq.doctors[0].name
+        this.speciality = qqq.doctors[0].speciality
         // console.log(this.post.filter(post=> post.index == this.$route.params.comp)[0])
-        return this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[this.$route.params.id].visits
+        return qqq.doctors[this.$route.params.id].visits
       }
     },
 
@@ -113,15 +127,12 @@ export default {
     this.getPost(this.$route.params.id);
   },
   watch: {
- '$edit'(){
-   alert("изменить?")
- }
 }
 }
 </script>
 <style lang="sass" scoped>
 .test
-  background: #FFFFE4
+  // background: #FFFFE4
   display: grid
   grid-template-columns: 20% auto
 
@@ -151,6 +162,9 @@ h1
   display: grid
   grid-template-columns: fit-content(50%) fit-content(50%)
 
+.test > win
+  display: grid
+  grid-template-columns: auto
 
 .compData > div
   display: flex

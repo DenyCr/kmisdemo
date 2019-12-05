@@ -82,7 +82,7 @@ export default {
   display: flex
 
 h1 
-  color: red
+  color: green
 
 .content 
   flex: 1 1 
