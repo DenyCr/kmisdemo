@@ -7,7 +7,7 @@
       select(v-model="selectedCompany")
         option(v-for="sel in selected"  v-bind:value="sel.id" v-bind:company="sel.company") {{ sel.company }} 
     //- button Записаться
-    h1 Список номерков 
+    h1 Список специалистов 
     .DostorsList
       router-link(
         v-for="post in getDoctors"
@@ -15,7 +15,7 @@
         class="link"
         :to="{ name: 'post', params: { id: post.id, comp: selectedCompany} }"
         ) 
-        .armor(v-on:click="getDoctorsArmLst()") {{post.speciality}} - {{ post.name }}  
+        .armor {{post.speciality}} - {{ post.name }}           
         br
   div(class="content")
     router-viev
@@ -60,13 +60,13 @@ export default {
           console.log(Error);
         })
     },
-    getDoctorsArmLst: function (post) {      
-      if(this.armorlistactiv)
-        this.armorlistactiv=false
-      else this.armorlistactiv=true
+    // getDoctorsArmLst: function (post) {      
+    //   if(this.armorlistactiv)
+    //     this.armorlistactiv=false
+    //   else this.armorlistactiv=true
 
-      return this.armorlistactiv
-    }
+    //   return this.armorlistactiv
+    // }
 
 
   }

@@ -1,65 +1,62 @@
 <template lang="pug">
 .test( v-if="$route.params" )
-  //- h1 fdgdg {{ post[getId()] }}
-  //- h1 {{this.$route.params}}
-  //- span {{post}}
   div  
-    
+    h1 Список номерков 
     .armLst(v-for="item in getArmors" )
-      br
-      span {{item.registered}}
-      br
+      button(v-on:click="perem = item.id") {{item.registered}} {{item.id}}
   div 
+    br
+    .from
+      .persData(v-if="perem != null")
+        .FIO
+          span ФИО 
+          input(:placeholder="[[getArmors[perem].name]]" v-model='getArmors[perem].name')
+        .POL
+          span Пол
+          select
+            option(disabled value="") Выберите один из вариантов
+            option Муж
+            option Жен 
+              
+        .CNILS
+          span СНИЛС
+          input(:placeholder="[[getArmors[perem].snils]]" type="number" v-model='getArmors[perem].snils')
+        .SerailPass
+          span Серия полиса
+          input
+        .NomerPass
+          span Номер полиса
+          input 
+        .email
+          span электронная почта
+          input(:placeholder="[[getArmors[perem].email]]" type="email" v-model='getArmors[perem].email')
+        .phone
+          span номер телефона для связи
+          input(:placeholder="[[getArmors[perem].phone]]" type="phone" v-model='getArmors[perem].phone')
+      .compData(v-if="perem != null")
+        .comp
+          span Выбранная организация:
+          input 
+        .doct
+          span Выбранный специалист
+          input 
+        .spec
+          span Терапевт 
+          input
+        .date
+          span Дата приема
+          input(type="date" value="[[getArmors[perem].registered]]" v-model='getArmors[perem].registered')
+
     .console
-      button Записаться
-      button Отменить бронь
-    //- span {{company}} 
-    //- br 
-    //- span {{doctor}}
-    
-  //- div(class="persData" v-if="post")
-    
-  //-   .FIO
-  //-     span ФИО 
-  //-     input(:placeholder="[[post[getId()].name]]" v-model='post[getId()].name')
-  //-   div(class="POL")
-  //-       span !!! Пол
-  //-       select
-  //-         option(disabled value="") Выберите один из вариантов
-  //-         option Муж
-  //-         option Жен
-  //-       //- p {{post[getId()].gender}}
-  //-   div(class="HB")
-  //-       span !!! Дата рождения
-  //-       input(type="date" value="[[post[getId()].registered]]" v-model='post[getId()].registered')
-  //-       //- p {{post[getId()].registered}}
-  //- div(class="persData" v-if="post")    
-  //-   div(class="CNILS")
-  //-       span СНИЛС
-  //-       input(:placeholder="[[post[getId()].snils]]" type="number" v-model='post[getId()].snils')
-  //-   div(class="SerailPass")
-  //-       span Серия полиса
-  //-       input
-  //-   div(class="NomerPass")
-  //-       span Номер полиса
-  //-       input
+      button( id="reg" ) Записаться
+      //- button( id="edit" onclick="alert(this.innerHTML)") Изменить
+      //- button( id="cansel" ) Отменить бронь
+    br 
+      
 
-  //- div(class="persData")     
-  //-   div(class="email")
-  //-       span электронная почта
-  //-       input(:placeholder="[[post[getId()].email]]" type="email" v-model='post[getId()].email')
-  //-   div(class="phone" )
-  //-       span номер телефона для связи
-  //-       input(:placeholder="[[post[getId()].phone]]" type="phone" v-model='post[getId()].phone')
-     
 
-  //- div(class="post" v-if="post")
-  //-   div(class="post__title") 
-  //-     h1 {{ post[getId()].title }}
-  //-   div(class="post__body") 
-  //-     p {{ post[getId()].body }}
-  //-   div(class="post__id")   
-  //-     p {{ post[getId()].id }}
+
+      
 
 </template>
 <script>
@@ -73,12 +70,12 @@ export default {
       company: null,
       doctor: null,
       speciality: null,
+      perem: null,
     }
   },
 
   methods: {
     getPost(id) {
-      // console.log ( this.$route.params.id)
       axios.get(this.endpoint)
         .then(response => {
           this.post = response.data
@@ -87,20 +84,23 @@ export default {
           console.log(error)
         })
     },
+    getArmLst(id) {
+      Console.log("ID = ", id)
+      return id
+    }
   },
     
   created() {
     this.getPost(this.$route.params.comp);
-    // this.getId();
   },
 
   computed: {
 
     getArmors: function() {
       if(this.$route.params != null){
-        this.company =this.post.filter(post=> post.index == this.$route.params.comp)[0].company
-        this.doctor = this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[0].name
-        this.speciality = this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[0].speciality
+        // this.company =this.post.filter(post=> post.index == this.$route.params.comp)[0].company
+        // this.doctor = this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[0].name
+        // this.speciality = this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[0].speciality
         // console.log(this.post.filter(post=> post.index == this.$route.params.comp)[0])
         return this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[this.$route.params.id].visits
       }
@@ -110,14 +110,12 @@ export default {
   },
 
   updated() {
-    // console.log (this.post)
     this.getPost(this.$route.params.id);
-    // this.getId();
   },
   watch: {
-  '$route'() {
-    // this.getPost(this.id);
-  }
+ '$edit'(){
+   alert("изменить?")
+ }
 }
 }
 </script>
@@ -127,18 +125,16 @@ export default {
   display: grid
   grid-template-columns: 30% auto
 
-// .armLst 
-//   display: grid;
-//   grid-template-columns: 16% auto
 
-.armLst
+
+.armLst button
   background: #004A6c  /* Цвет фона */
   color: #fff /* Цвет текста */
   padding: 10px   /* Поля */  
   border-radius: 10px /* Уголки */
   margin-top: 15px  /* Отступ сверху */
   margin-left: 15px
-  margin-all: 15 px
+  margin-right: 15 px
   // border: 2px solid #000 /* Параметры рамки */
   -moz-box-sizing: border-box /* Для Firefox */  
   box-sizing: border-box /* Ширина блока с полями */
@@ -146,18 +142,21 @@ export default {
 
 h1 
   color: green
+  
+.from 
+  display: grid
+  grid-template-columns: auto auto
+.form div
+  display: grid
+  grid-template-columns: fit-content(50%) fit-content(50%)
 
 
-.persData
+.compData > div
   display: flex
-  justify-content: center
-
 .persData > div
   display: flex
-  align-items: center 
-  padding: 5px
-  
-div span 
+  disabled
+span 
   padding: 10px
 
 button
@@ -171,6 +170,7 @@ button
   box-sizing: border-box /* Ширина блока с полями */
 
 .console
+  display: none
   display: grid
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
 </style>
