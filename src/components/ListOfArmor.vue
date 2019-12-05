@@ -2,19 +2,13 @@
 .test
   
   aside(class="sidebar")
-    //- span {{selected}}
-    //- br
     .MO
       p МО
       select(v-model="selectedCompany")
         option(v-for="sel in selected"  v-bind:value="sel.id" v-bind:company="sel.company") {{ sel.company }} 
-    br     
-    span {{selectedCompany}}
     //- button Записаться
     h1 Список номерков 
-    //- &nbsp;
     .DostorsList
-      //- span {{getDoctors}}
       router-link(
         v-for="post in getDoctors"
         active-class="in-active"
@@ -22,16 +16,6 @@
         :to="{ name: 'post', params: { id: post.id, comp: selectedCompany} }"
         ) 
         .armor(v-on:click="getDoctorsArmLst()") {{post.speciality}} - {{ post.name }}  
-        //- span {{armorlistactiv}} 
-        //- div(:class="{}" v-on:click="getDoctorsArmLst(post)") 
-        //-   span {{post.id}}
-        //-   p ФИО - {{ post.name }} <br> специализация - {{post.speciality}}
-          //- .armLst(v-if="getArmors" v-for="item in getArmors")
-          //-   br
-          //-   span {{item.registered}}
-          //-   br
-
-        //- span {{armorlistactiv}}
         br
   div(class="content")
     router-viev
@@ -48,24 +32,14 @@ export default {
       endpoint: '.\\src\\db\\generated.json',
       selected: [],
       selectedCompany: null,
-      // armorlistactiv: false,
-      // ckickDoct: null
-      // userPost: []
     }
   },
   computed: {
     getDoctors: function () {
       if (this.selectedCompany != null){
-        // console.log('getDoctors: ', this.posts.filter(post=> post.index == this.selectedCompany));
         return  this.posts.filter(post=> post.index == this.selectedCompany)[0].doctors
       }
     },
-    // getArmors: function() {
-    //   if(this.ckickDoct != null){
-    //     return this.ckickDoct.visits
-    //     // this.posts.filter(post=> post.index == this.selectedCompany)[this.&&]);
-    //   }
-    // }
 
   },
 
@@ -78,12 +52,8 @@ export default {
       axios.get(this.endpoint)
         .then(Response => {
           this.posts = Response.data;
-          // console.log('this.posts: ', this.posts);
           this.selected = this.posts.map(post=> 
             {          return {id: post.index, company: post.company}} ); 
-          // console.log('this.selected: ', this.selected);
-          
-          // this.userPost =  this.posts.filter(post=> post.userId == selectedCompany)
         })
         .catch(Error => {
           console.log('---------error----------');
@@ -91,9 +61,6 @@ export default {
         })
     },
     getDoctorsArmLst: function (post) {      
-      // console.log('armorlistactiv: ', armorlistactiv );
-      // console.log(post)
-      // this.ckickDoct=post
       if(this.armorlistactiv)
         this.armorlistactiv=false
       else this.armorlistactiv=true
@@ -110,13 +77,10 @@ export default {
 .MO
   display: flex
   justify-content: center
-  padding: 10px
+  // padding: 10px
 .test
   display: flex
-  // width: 100%
 
-.DostorsList
-  // background: blue
 h1 
   color: red
 
@@ -132,19 +96,9 @@ h1
   padding: 20px   /* Поля */  
   border-radius: 10px /* Уголки */
   margin-top: 10px  /* Отступ сверху */
-  // border: 2px solid #000 /* Параметры рамки */
   -moz-box-sizing: border-box /* Для Firefox */  
   box-sizing: border-box /* Ширина блока с полями */
 
-.armLst
-  background: red  /* Цвет фона */
-  color: #fff /* Цвет текста */
-  padding: 20px   /* Поля */  
-  border-radius: 10px /* Уголки */
-  margin-top: 10px  /* Отступ сверху */
-  border: 2px solid #000 /* Параметры рамки */
-  -moz-box-sizing: border-box /* Для Firefox */  
-  box-sizing: border-box /* Ширина блока с полями */
 
 button
   width: -webkit-fill-available
@@ -153,9 +107,10 @@ button
   padding: 20px   /* Поля */  
   border-radius: 10px /* Уголки */
   margin-top: 10px  /* Отступ сверху */
-  // border: 2px solid #000 /* Параметры рамки */
   -moz-box-sizing: border-box /* Для Firefox */  
   box-sizing: border-box /* Ширина блока с полями */
 
+div p 
+  padding: 10px
 
 </style>

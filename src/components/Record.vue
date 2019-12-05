@@ -1,11 +1,22 @@
 <template lang="pug">
 .test( v-if="$route.params" )
   //- h1 fdgdg {{ post[getId()] }}
-  h1 {{this.$route.params}}
+  //- h1 {{this.$route.params}}
   //- span {{post}}
-  .armLst(v-for="item in getArmors")
-    br
-    span {{item}}
+  div  
+    
+    .armLst(v-for="item in getArmors" )
+      br
+      span {{item.registered}}
+      br
+  div 
+    .console
+      button Записаться
+      button Отменить бронь
+    //- span {{company}} 
+    //- br 
+    //- span {{doctor}}
+    
   //- div(class="persData" v-if="post")
     
   //-   .FIO
@@ -59,6 +70,9 @@ export default {
     return {
       post: null,
       endpoint: '.\\src\\db\\generated.json',
+      company: null,
+      doctor: null,
+      speciality: null,
     }
   },
 
@@ -73,10 +87,6 @@ export default {
           console.log(error)
         })
     },
-    // getId()
-    // {
-    //   return (this.$route.params.id)?this.$route.params.id:''
-    // }
   },
     
   created() {
@@ -88,15 +98,14 @@ export default {
 
     getArmors: function() {
       if(this.$route.params != null){
-        console.log(this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[this.$route.params.id])
-                    // this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors)
-        // return this.ckickDoct.visits
-        // this.posts.filter(post=> post.index == this.selectedCompany)[this.&&]);
+        this.company =this.post.filter(post=> post.index == this.$route.params.comp)[0].company
+        this.doctor = this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[0].name
+        this.speciality = this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[0].speciality
+        // console.log(this.post.filter(post=> post.index == this.$route.params.comp)[0])
+        return this.post.filter(post=> post.index == this.$route.params.comp)[0].doctors[this.$route.params.id].visits
       }
     },
-    // getVizits: function() {
-    //   if()
-    // }
+
 
   },
 
@@ -115,8 +124,25 @@ export default {
 <style lang="sass" scoped>
 .test
   background: #FFFFE4
+  display: grid
+  grid-template-columns: 30% auto
 
+// .armLst 
+//   display: grid;
+//   grid-template-columns: 16% auto
 
+.armLst
+  background: #004A6c  /* Цвет фона */
+  color: #fff /* Цвет текста */
+  padding: 10px   /* Поля */  
+  border-radius: 10px /* Уголки */
+  margin-top: 15px  /* Отступ сверху */
+  margin-left: 15px
+  margin-all: 15 px
+  // border: 2px solid #000 /* Параметры рамки */
+  -moz-box-sizing: border-box /* Для Firefox */  
+  box-sizing: border-box /* Ширина блока с полями */
+  opacity: 0.7
 
 h1 
   color: green
@@ -133,4 +159,18 @@ h1
   
 div span 
   padding: 10px
+
+button
+  width: -webkit-fill-available
+  background: #007E3E  /* Цвет фона */
+  color: #fff /* Цвет текста */
+  padding: 20px   /* Поля */  
+  border-radius: 10px /* Уголки */
+  margin-top: 10px  /* Отступ сверху */
+  -moz-box-sizing: border-box /* Для Firefox */  
+  box-sizing: border-box /* Ширина блока с полями */
+
+.console
+  display: grid
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
 </style>
