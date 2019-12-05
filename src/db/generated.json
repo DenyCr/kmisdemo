@@ -6,7 +6,7 @@
       {
         "id": 0,
         "name": "Letitia Valentine",
-        "speciality": "lor",
+        "speciality": "otolaryngologist",
         "visits": [
           {
             "userId": 0,
@@ -285,7 +285,7 @@
       {
         "id": 0,
         "name": "Warren Klein",
-        "speciality": "lor",
+        "speciality": "otolaryngologist",
         "visits": [
           {
             "userId": 0,
@@ -376,7 +376,7 @@
       {
         "id": 1,
         "name": "Merrill Velazquez",
-        "speciality": "lor",
+        "speciality": "otolaryngologist",
         "visits": [
           {
             "userId": 0,

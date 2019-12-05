@@ -3,7 +3,7 @@
   div  
     h1 Список номерков 
     .armLst(v-for="item in getArmors" )
-      button(v-on:click="perem = item.id") {{item.registered}} {{item.id}}
+      button(v-on:click="perem = item.id") {{item.registered}} 
   div 
     br
     .from
@@ -36,21 +36,21 @@
       .compData(v-if="perem != null")
         .comp
           span Выбранная организация:
-          input 
+          input(:placeholder="[[company]]" type="company" v-model='company')
         .doct
           span Выбранный специалист
-          input 
+          input(:placeholder="[[doctor]]" type="doctor" v-model='doctor')
         .spec
           span Терапевт 
-          input
+          input(:placeholder="[[speciality]]" type="speciality" v-model='speciality')
         .date
           span Дата приема
           input(type="date" value="[[getArmors[perem].registered]]" v-model='getArmors[perem].registered')
 
     .console
       button( id="reg" ) Записаться
-      //- button( id="edit" onclick="alert(this.innerHTML)") Изменить
-      //- button( id="cansel" ) Отменить бронь
+      button( id="edit" onclick="alert(this.innerHTML)") Изменить
+      button( id="cansel" ) Отменить бронь
     br 
       
 
@@ -123,7 +123,7 @@ export default {
 .test
   background: #FFFFE4
   display: grid
-  grid-template-columns: 30% auto
+  grid-template-columns: 20% auto
 
 
 
@@ -139,6 +139,7 @@ export default {
   -moz-box-sizing: border-box /* Для Firefox */  
   box-sizing: border-box /* Ширина блока с полями */
   opacity: 0.7
+  font-size: 1.2rem
 
 h1 
   color: green
